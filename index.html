@@ -105,6 +105,9 @@
             alert(`Modo aleatorio: ${isRandom ? "Activado" : "Desactivado"}`);
         }
         
+        // Reproducir automáticamente la siguiente pista al finalizar la actual
+        audioPlayer.addEventListener("ended", nextTrack);
+        
         loadTrack(currentIndex);
     </script>
 </body>
