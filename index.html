@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Audio</title>
+    <style>
+        body { 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            background-color: #121212; 
+            color: #ffffff; 
+            margin: 0;
+            padding: 20px;
+        }
+        audio {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+        }
+        .controls { 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px; 
+        }
+        button { 
+            flex: 1 1 45%; /* Tamaño flexible, mínimo 45% del ancho */
+            max-width: 150px; /* Máximo tamaño de botón */
+            margin: 5px; 
+            padding: 15px; 
+            font-size: 16px;
+            cursor: pointer; 
+            background-color: #333; 
+            color: white; 
+            border: none; 
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h2>Reproductor de Audio</h2>
+    <audio id="audio-player" controls>
+        <source id="audio-source" src="" type="audio/mp3">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    <div class="controls">
+        <button onclick="prevTrack()">⏮ Anterior</button>
+        <button onclick="playTrack()">▶ Play</button>
+        <button onclick="pauseTrack()">⏸ Pause</button>
+        <button onclick="nextTrack()">⏭ Siguiente</button>
+        <button onclick="toggleRandom()">🔀 Aleatorio</button>
+    </div>
+    
+    <script>
+        let trackList = [
+            "src/song8.mp3",
+            "src/song12.mp3",
+            "src/song1.mp3",
+            "src/song10.mp3",
+            "src/song2.mp3",
+            "src/song3.mp3",
+            "src/song4.mp3",
+            "src/song11.mp3",
+            "src/song5.mp3",
+            "src/song6.mp3",
+            "src/song7.mp3",
+            "src/song9.mp3",
+            "src/song13.mp3",
+            "src/song14.mp3",
+        ];
+        let currentIndex = 0;
+        let isRandom = false;
+        let audioPlayer = document.getElementById("audio-player");
+        let audioSource = document.getElementById("audio-source");
+        
+        function loadTrack(index) {
+            audioSource.src = trackList[index];
+            audioPlayer.load();
+            audioPlayer.play();
+        }
+        
+        function playTrack() { audioPlayer.play(); }
+        function pauseTrack() { audioPlayer.pause(); }
+        
+        function nextTrack() {
+            currentIndex = isRandom ? Math.floor(Math.random() * trackList.length) : (currentIndex + 1) % trackList.length;
+            loadTrack(currentIndex);
+        }
+        
+        function prevTrack() {
+            currentIndex = isRandom ? Math.floor(Math.random() * trackList.length) : (currentIndex - 1 + trackList.length) % trackList.length;
+            loadTrack(currentIndex);
+        }
+        
+        function toggleRandom() {
+            isRandom = !isRandom;
+            alert(`Modo aleatorio: ${isRandom ? "Activado" : "Desactivado"}`);
+        }
+        
+        loadTrack(currentIndex);
+    </script>
+</body>
+</html>
